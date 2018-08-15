@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: spring-cloud-stream
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: kafkaTopic
+          content-type: application/json
+        input:
+          destination: kafkaTopic
+          content-type: application/json
+        binder:
+          zkNodes: localhost
+          brokers: localhost
+logging:
+  level:
+    org.springframework.web: WARN
+    com.github.jaytobi: DEBUG
+server:
+  port: 8080
