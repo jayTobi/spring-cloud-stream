@@ -4,15 +4,26 @@ spring:
   cloud:
     stream:
       bindings:
+        # all bindings use the same topic but different names so they could be configured to use different
         output:
           destination: kafkaTopic
-          content-type: application/json
+          contentType: application/*+avro
         input:
           destination: kafkaTopic
-          content-type: application/json
-        binder:
-          zkNodes: localhost
-          brokers: localhost
+        addressOutput:
+          destination: kafkaTopic
+          contentType: application/*+avro
+        addressInput:
+          destination: kafkaTopic
+      schema-registry-client:
+        endpoint: http://localhost:8990
+      schema:
+        avro:
+          dynamicSchemaGenerationEnabled: true # generates schemas based on the data classes
+      #          schema-locations: classpath:avro/user.avsc
+      binder:
+        zkNodes: localhost
+        brokers: localhost
 logging:
   level:
     org.springframework.web: WARN
